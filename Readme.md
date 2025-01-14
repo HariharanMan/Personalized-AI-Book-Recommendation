@@ -18,5 +18,5 @@ The Personalized AI Book Recommendation project is a Streamlit-based application
 
 1. **Clone the Repository**
    ```bash
-   git clone https://https://github.com/HariharanMan/Personalized-AI-Book-Recommendation
+   git clone https://github.com/yourusername/personalized-ai-book-recommendation.git
    cd personalized-ai-book-recommendation
