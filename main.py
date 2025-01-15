@@ -25,6 +25,20 @@ class GeminiModel:
         recommendations = self.parse_response(response.text)
         return recommendations
 
+    def get_detailed_summary(self, book_title):
+        # Create a prompt for the Gemini model
+        prompt = (f"Provide a detailed summary of the book titled '{book_title}'. "
+                  f"Include the plot, main characters, themes, and any notable reviews or awards.")
+
+        # Initialize the Gemini model
+        model = genai.GenerativeModel(self.model_name)
+
+        # Make an API call to the Gemini model
+        response = model.generate_content(prompt)
+
+        # Return the detailed summary
+        return response.text
+
     def parse_response(self, response_text):
         # Parse the response text from the Gemini model
         recommendations = []
@@ -35,7 +49,7 @@ class GeminiModel:
                 book = {
                     "Book Title": lines[0].replace("Book Title: ", ""),
                     "Context and Summary": lines[1].replace("Context and Summary: ", ""),
-                    "Purchase Link": lines[2].replace("Purchase Link: ", "")
+                    #"Purchase Link": lines[2].replace("Purchase Link: ", "")
                 }
                 recommendations.append(book)
         return recommendations
@@ -54,7 +68,7 @@ def main():
     if st.sidebar.button("Get Recommendations"):
         # Initialize the Gemini model
         model_name = "gemini-1.5-flash"
-        api_key = "Replace with your actual API key"  
+        api_key = "Your Api key"
         gemini_model = GeminiModel(model_name, api_key)
 
         # Get recommendations
@@ -65,8 +79,27 @@ def main():
         for book in recommendations:
             st.subheader(book["Book Title"])
             st.write(book["Context and Summary"])
-            st.markdown(f"[Purchase Link]({book['Purchase Link']})")
+            #st.markdown(f"[Purchase Link]({book['Purchase Link']})")
             st.write("---")  # Add a separator between books
+
+    # Chat section
+    st.header("Chat with AI for Detailed Book Summary")
+    book_title = st.text_input("Enter the book title for a detailed summary:")
+    if st.button("Get Detailed Summary"):
+        if book_title:
+            # Initialize the Gemini model
+            model_name = "gemini-1.5-flash"
+            api_key = "your api key"
+            gemini_model = GeminiModel(model_name, api_key)
+
+            # Get detailed summary
+            detailed_summary = gemini_model.get_detailed_summary(book_title)
+
+            # Display the detailed summary
+            st.subheader("Detailed Summary")
+            st.write(detailed_summary)
+        else:
+            st.warning("Please enter a book title.")
 
     # Custom styling
     st.markdown(
