@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 # Gemini Model Wrapper
 class GeminiModel:
-    def __init__(self, model_name, api_key):
+    def _init_(self, model_name, api_key):
         self.model_name = model_name
         self.api_key = api_key
         genai.configure(api_key=self.api_key)
@@ -54,21 +54,21 @@ class GeminiModel:
                 recommendations.append(book)
         return recommendations
 
-# Streamlit UI
-def main():
-    st.title("Personalized AI Book Recommendation")
+# Page: Recommendations
+def recommendations_page():
+    st.title("Personalized AI Book Recommendation🚀")
 
     # Sidebar for user inputs
     st.sidebar.header("User Inputs")
 
-    language = st.sidebar.selectbox("Select Language", ["English", "Tamil", "Hindi", "Malayalam", "French"])
+    language = st.sidebar.selectbox("Select Language", ["English", "Tamil", "Hindi", "Malayalam", "French" ,"Spanish"])
     age_group = st.sidebar.selectbox("Select Age Group", ["1 to 10", "10 to 20", "20 to 30", "30 to 40", "40 to 50", "50 to 60"])
     genre = st.sidebar.multiselect("Select Genre", ["Education", "Tech", "Horror", "Thriller", "Philosophy", "Comic", "Spiritual"])
 
     if st.sidebar.button("Get Recommendations"):
         # Initialize the Gemini model
         model_name = "gemini-1.5-flash"
-        api_key = "Your Api key"
+        api_key = "Your_API key"
         gemini_model = GeminiModel(model_name, api_key)
 
         # Get recommendations
@@ -82,14 +82,15 @@ def main():
             #st.markdown(f"[Purchase Link]({book['Purchase Link']})")
             st.write("---")  # Add a separator between books
 
-    # Chat section
-    st.header("Chat with AI for Detailed Book Summary")
+# Page: Chat
+def chat_page():
+    st.title("Chat with AI for Detailed Book Summary")
     book_title = st.text_input("Enter the book title for a detailed summary:")
     if st.button("Get Detailed Summary"):
         if book_title:
             # Initialize the Gemini model
             model_name = "gemini-1.5-flash"
-            api_key = "your api key"
+            api_key = "Your API Key"
             gemini_model = GeminiModel(model_name, api_key)
 
             # Get detailed summary
@@ -100,6 +101,16 @@ def main():
             st.write(detailed_summary)
         else:
             st.warning("Please enter a book title.")
+
+# Main function to handle multi-page navigation
+def main():
+    st.sidebar.title("Page Navigation")
+    page = st.sidebar.selectbox("Go to", ["Recommendations", "Chat"])
+
+    if page == "Recommendations":
+        recommendations_page()
+    elif page == "Chat":
+        chat_page()
 
     # Custom styling
     st.markdown(
