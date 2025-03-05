@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 # Gemini Model Wrapper
 class GeminiModel:
-    def _init_(self, model_name, api_key):
+    def __init__(self, model_name, api_key):
         self.model_name = model_name
         self.api_key = api_key
         genai.configure(api_key=self.api_key)
@@ -104,7 +104,7 @@ def chat_page():
 
 # Main function to handle multi-page navigation
 def main():
-    st.sidebar.title("Page Navigation")
+    st.sidebar.title("Navigation")
     page = st.sidebar.selectbox("Go to", ["Recommendations", "Chat"])
 
     if page == "Recommendations":
