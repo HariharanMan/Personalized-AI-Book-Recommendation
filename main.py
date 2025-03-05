@@ -68,7 +68,7 @@ def recommendations_page():
     if st.sidebar.button("Get Recommendations"):
         # Initialize the Gemini model
         model_name = "gemini-1.5-flash"
-        api_key = "Your_API key"
+        api_key = "AIzaSyAex9EGrl5TlhLZcWY1yNQLuG3Vqt2TBys"
         gemini_model = GeminiModel(model_name, api_key)
 
         # Get recommendations
@@ -90,7 +90,7 @@ def chat_page():
         if book_title:
             # Initialize the Gemini model
             model_name = "gemini-1.5-flash"
-            api_key = "Your API Key"
+            api_key = "AIzaSyAex9EGrl5TlhLZcWY1yNQLuG3Vqt2TBys"
             gemini_model = GeminiModel(model_name, api_key)
 
             # Get detailed summary
